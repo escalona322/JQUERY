@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+
+            $("h1").click(function(){
+                /*Esta funcion solo funciona con los elementos
+                ya creados en el html, si creo un objeto dinamico
+                Esta funcion no seria capaz de modificarlo*/
+                $(this).text("Evento Activado");
+            });
+            
+            $("#botoncrear").click(function(){
+              
+                var textoT = $("#cajatexto").val();
+                /* Usanfdo JSON
+                var titulo = $("<h1>", {"text":textoT, "style":"color:red"});
+                var padre = $("#padre");
+                titulo.appendTo(padre);    */
+                //Atributo a atributo
+                var h1 = $("<h1>");
+                h1.text(textoT);
+                h1.css("color", "fuchsia");
+                $("#padre").append(h1);
+
+                h1.click(function(){
+                var texto2 = $("#cajatexto").val();
+                alert(texto2);
+            });
+            });
+            
+        });
+    </script>
+    <h1>Generar controles dinamicos</h1>
+    <label for="cajatexto">introduzca un texto</label>
+    <input type="text" id="cajatexto"/>
+    <button id="botoncrear">
+        Crear titulo
+    </button>
+    <div id="padre">
+
+
+    </div>
+</body>
+</html>
