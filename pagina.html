@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Importante!!!! Al importar frameworks, la etiqueta <script> debe cerrarse
+        de esta forma: <script src="..."></script>. Si se cierra asi: <script src="..."/> no funcionara-->
+    <script src="jquery-3.6.0.min.js"></script>    
+    <style>
+        .rojo{
+            color:red;
+        }
+    </style>
+
+</head>
+<body> 
+    <h1>Test</h1>
+    <h1>Titulo 2</h1>
+    <h1>Titulo 3</h1>
+    <h1 class="rojo">Titulo 4</h1>
+    <img id="recorte" src="images/recortes.png" alt="">
+    <button id="boton" class="rojo"> Boton 1 </button>
+    <!--Conviene usar $(document).ready, evita problemas de que no se encuentren elementos.
+    Si desarrollo un script fuera del document ready, este tiene que encontrarse despues de los 
+    elementos a los que refiera, pues si se encuentra antes, no sera capaz de leer esos elementos
+    y usarlos para el script. Con $(document).ready se evita este problema-->
+    <script>
+        $(document).ready(function(){
+            //alert("Jquery funciona!");
+            //$("h1").hide();
+            $("#boton").click(function(){
+            //selector etiquetas 
+            //$("h1").show(); 
+            //SELECTOR DE ESTILOS
+            //$(".rojo").hide();
+            //$(this).fadeOut(5000);
+            var imagen = $("#recorte").attr("src");
+            if(imagen == "images/recortes.png"){
+                $("#recorte").attr("src", "images/recortes2.png")
+            }else{
+                $("#recorte").attr("src", "images/recortes.png")
+            }
+           
+        });
+        });
+
+        
+
+
+    </script>
+</body>
+</html>

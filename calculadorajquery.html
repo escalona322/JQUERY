@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+    <style>
+        .rojo{
+            color:red;
+        }
+        .verde{
+            color:green;
+        }
+    </style>
+</head>
+<body>
+    <div style="border-color:black; border:solid;">
+        <h1 id="titulo1">Ejemplo contenido/valor</h1>
+    <label for="caja1">Numero 1</label>
+    <input type="number" id="caja1"/>
+    <label for="caja2">Numero 2</label>
+    <input type="number" id="caja2"/>
+    <br><br>
+    <button type="button" id="suma">Sumar</button>
+    <button type="button" id="resta">Restar</button>
+    <button type="button" id="multiplicar">Multiplicar</button>
+    <button type="button" id="dividir">Dividir</button>
+
+    <p id="solucion"></p>
+    </div>
+    
+    <script>
+        $(document).ready(function(){
+
+            $("button").click(function(){
+                var valor1 = $("#caja1").val();
+                var valor2 = $("#caja2").val();
+                var resultado = 0;
+
+                if(valor1 == "" || valor2 == ""){
+                    alert("Algun numero no tiene valor!")
+                }else{
+                    $("#suma").click(function(){
+                        resultado = parseInt(valor1) + parseInt(valor2);
+                        if(resultado < 0){
+                            $("#solucion").removeClass("verde");
+                            $("#solucion").addClass("rojo");
+                        }else{
+                            $("#solucion").removeClass("rojo");
+                            $("#solucion").addClass("verde");
+                        }               
+                        $("#solucion").text("El resultado es " + resultado);
+                    });
+                    $("#resta").click(function(){
+                        resultado = parseInt(valor1) - parseInt(valor2);
+                        if(resultado < 0){
+                            $("#solucion").removeClass("verde");
+                            $("#solucion").addClass("rojo");
+                        }else{
+                            $("#solucion").removeClass("rojo");
+                            $("#solucion").addClass("verde");
+                        } 
+                        $("#solucion").text("El resultado es " + resultado);
+                    });
+                    $("#multiplicar").click(function(){
+                        if(resultado < 0){
+                            $("#solucion").removeClass("verde");
+                            $("#solucion").addClass("rojo");
+                        }else{
+                            $("#solucion").removeClass("rojo");
+                            $("#solucion").addClass("verde");
+                        } 
+                        resultado = parseInt(valor1) * parseInt(valor2);
+                        $("#solucion").text("El resultado es " + resultado);
+                    });
+                    $("#dividir").click(function(){
+                        if(resultado < 0){
+                            $("#solucion").removeClass("verde");
+                            $("#solucion").addClass("rojo");
+                        }else{
+                            $("#solucion").removeClass("rojo");
+                            $("#solucion").addClass("verde");
+                        } 
+                        resultado = parseInt(valor1) / parseInt(valor2);
+                        $("#solucion").text("El resultado es " + resultado);
+                    });
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>
