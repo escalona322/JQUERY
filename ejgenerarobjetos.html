@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <label for="num">¿Cuantas imagenes?</label>
+    <input type="range" min="1" max="10" id="num">
+   
+    <div id="padre">
+
+
+    </div>
+    <script>
+        $(document).ready(function(){
+            $("#num").change(function(){
+                var numimgs = $("#num").val();
+                console.log(numimgs);
+                var padre = $("#padre");
+                padre.text("");
+                for(var i=1; i<=numimgs; i++){
+                     var imagen = $("<img>", {"src":"images/pepe.jpg"});
+                    console.log("dentro del for "+numimgs);
+                    padre.append(imagen);
+                    imagen.mouseover(function(){
+                $(this).attr("src", "images/pepefeliz.PNG");
+                  });
+
+                imagen.mouseout(function(){
+                $(this).attr("src", "images/pepe.jpg");
+                });
+                }
+
+            
+            });
+        });
+
+    </script>
+</body>
+</html>
