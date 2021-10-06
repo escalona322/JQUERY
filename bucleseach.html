@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Ejemplo Each</h1>
+    <script>
+        $(document).ready(function(){
+            $("p").click(function(){             
+                var colores = ["red", "blue", "green", "black", "yellow"];
+
+               $("p").each(function(){
+                    var indice = parseInt(Math.random()*5);
+                    $(this).css("background-color",colores[indice]);
+               });
+            });
+        });
+    </script>
+    <p id="p1"> Parrafo 1</p>
+    <p id="p2"> Parrafo 2</p>
+    <p id="p3"> Parrafo 3</p>
+    <p id="p4"> Parrafo 4</p>
+    <p id="p5"> Parrafo 5</p>
+</body>
+</html>
