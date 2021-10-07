@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <input type="range" min="1" max="10" id="num">
+    <div id="contbotones">
+
+    </div>
+    <br>
+    <div id="contimgs">
+
+    </div>
+    <script>
+         $(document).ready(function(){
+
+            $("#num").change(function(){
+                var numimgs = $("#num").val();
+                console.log(numimgs);
+                var contbotones = $("#contbotones");
+                var contimgs = $("#contimgs")
+                contbotones.text("");
+                contimgs.text("")
+                for(var i=1; i<=numimgs; i++){
+                    var imagen = $("<img>", {"src":"images/pepe.jpg",
+                    "data-clave": i,    
+                });
+                    var boton = $("<button>", {
+                        "text":"Imagen "+ i,
+                        "data-clave": i,   
+                    })
+                    console.log("dentro del for "+numimgs);
+                    contbotones.append(boton);
+                    contimgs.append(imagen);    
+                    
+            }       
+            
+            $("button").each(function(){
+                console.log("dentro de la funcion de cojer todos los botones " );
+                var boton = $(this);
+                  $(boton).click(function(){
+                     $("img").each(function(){
+                         var img = $(this);
+                         console.log("dnetro de la segunda funcion ")
+                              if($(boton).attr("data-clave") == img.attr("data-clave")){
+                                console.log("dentro del if")
+                                if(img.attr("src")=="images/pepe.jpg"){
+                                    img.attr("src","images/pepefeliz.png");
+                                }else{
+                                    img.attr("src","images/pepe.jpg");
+                                }
+                              
+                             }
+                });                                 
+                });
+                     
+                });   
+            });
+
+        });
+    </script>
+</body>
+</html>
