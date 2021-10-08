@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Atributos xml</h1>
+    <button type="button" id="leerdatos">Cargar datos</button>
+    <table border="1px" id="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Telefono</th>
+            </tr>    
+        </thead>
+        <tbody id="cuerpotabla">
+
+        </tbody>
+    </table>
+    <script>
+        $(document).ready(function(){
+            $("#leerdatos").click(function(){
+                $.get("documentos/XML/hospital_atributos.xml", function(data){
+                    console.log("dentro de lectura");
+                    html = "";
+                    $(data).find("HOSPITAL").each(function(){
+                        var attr1 = $(this).attr("NOMBRE");
+                        var attr2 = $(this).attr("DIRECCION");
+                        var attr3 = $(this).attr("TELEFONO");
+                        html += "<tr><td>"+attr1+"</td><td>"+attr2+"</td><td>"+attr3+"</td></tr>";
+                    });
+                    $("#tabla tbody").html(html);
+                });
+            });
+        });
+    </script>
+</body>
+</html>l

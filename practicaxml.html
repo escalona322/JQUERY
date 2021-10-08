@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Lectura xml</h1>
+    <button type="button" id="botonleer">Cargar datos empleados</button>
+    <ul id="lista">
+
+
+
+    </ul>
+    <script>
+        $(document).ready(function(){
+            $("#botonleer").click(function(){
+                console.log("Antes de leer el xml");
+                    $.get("documentos/XML/empleados.xml", function(data){
+                        console.log("Leyendo xml");
+                        var html="";
+                            $(data).find("APELLIDO").each(function(){
+                                var apellido = $(this).text();
+                                html += "<li>" + apellido + "</li>";
+                            });
+                                $("#lista").html(html);
+                            });
+                    });
+                console.log("Despues de leer el xml");
+            });   
+    </script>
+</body>
+</html>
