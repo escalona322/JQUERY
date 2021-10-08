@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Busquedas XML</h1>
+    <label>Apellido</label>
+    <input type="text" id="cajaapellido"/>
+    <button type="button" id="botonapellido">
+        Buscar apellidos
+    </button>
+    <hr>
+    <label>Código hospital</label>
+    <input type="text" id="cajahospital">
+    <button type="button" id="botonhospital">
+        Buscar hospital
+    </button>
+    <hr>
+    <div id="contenido">
+
+    </div>
+    <script>
+        $(document).ready(function(){
+          
+                $("#botonapellido").click(function(){
+                    var apellido = $("#cajaapellido").val();
+                    $.get("documentos/XML/empleados.xml", function(data){
+                        var filtro = "APELLIDO:contains(" + apellido + ")";
+                        var html = "";
+
+                        if( $(data).find(filtro).length == 0){
+                            html = "<h1 style=color:red> No hay apellidos </h1>";
+                        }else{
+                            $(data).find(filtro).each(function(){
+                             var ape = $(this).text();
+                            html += "<h1>"+ape+"</h1>";
+                            });
+                           $("#contenido").html(html);
+                        };      
+                        });
+                       
+                        $(data).find(filtro).each(function(){                    
+                            var ape = $(this).text();
+                            html += "<h1>"+ape+"</h1>";
+                        });
+                        $("#contenido").html(html);
+                    });                   
+             
+
+                $("#botonhospital").click(function(){
+                 
+                    var codigo = $("#cajahospital").val();
+                    $.get("documentos/XML/hospital_atributos.xml", function(data){
+                        var html = "";
+                    if( $(data).find(filtro).length == 0){
+                            console.log("dentro del if")
+                            html = "<h1 style=color:red> No hay hospitales </h1>";
+                    }else{
+                        console.log("dentro del else");
+                        var filtro = "HOSPITAL[HOSPITAL_COD="+codigo+"]";
+                        var nodohospital = $(data).find(filtro).first();
+                         html = "<h1>"+nodohospital.attr("NOMBRE")+"</h1>";
+                         }
+                         $("#contenido").html(html);
+                    });
+                    
+                });
+        
+        });
+    </script>
+</body>
+</html>

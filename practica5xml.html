@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Inyectar botones segun numero de datos en un xml</h1>
+    <div id="containerbotones">
+
+    </div>
+    <hr>
+    <div id="containerdepts">
+        <ul id="listadept">
+
+        </ul>
+    </div>
+    <script>
+        $(document).ready(function(){
+            var html ="";
+            var html2 = "";
+            $.get("documentos/XML/departamentosetiquetas.xml", function(data){               
+                
+                $(data).each(function(){
+                    $(this).find("DEPARTAMENTO").each(function(){
+                        var boton = $("<button>", {
+                            "type":"button",
+                            "id":$(this).find('NUMERO').text(),
+                            "value":$(this).find('NUMERO').text(),
+                            "text": "Detalles"+$(this).find("NUMERO").text()
+                        });
+                        $("#containerbotones").append(boton);
+                      
+                        console.log(boton);
+                          boton.click(function(){
+                              var num = $(this).val()
+                              var numero = "";
+                              var nombre ="";
+                              var localidad = "";
+                              $.get("documentos/XML/departamentosetiquetas.xml", function(data){
+                                  $(data).each(function(){
+                                    $(this).find("DEPARTAMENTO").each(function(){
+                                         numero = $(this).find('NUMERO').text();
+                                         nombre = $(this).find('NOMBRE').text();
+                                         localidad = $(this).find('LOCALIDAD').text();
+                                        console.log("dentro del each departamento "+numero+nombre+localidad);
+                                    });
+                                    if(num==numero){
+                                        $("#listadept").text("");   
+                                         console.log("dentro de la funcion click");                                                     
+                                         html2 = "<li>"+numero+"</li><li>"+nombre+"</li><li>"+localidad+"</li>";
+                                       $("#listadept").append(html2);
+                                       console.log("html2 dentro de funcion click"+html2)
+                                    }
+                                  });
+                                    
+                              });                           
+                        });                        
+                    });                 
+                   
+                    console.log("html1"+html);
+                    console.log("html2"+html2)
+                });
+                
+          
+        
+            });
+           
+        });
+    </script>
+</body>
+</html>
