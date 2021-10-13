@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
     <h1>Inyectar botones segun numero de datos en un xml</h1>
@@ -47,14 +48,15 @@
                                          nombre = $(this).find('NOMBRE').text();
                                          localidad = $(this).find('LOCALIDAD').text();
                                         console.log("dentro del each departamento "+numero+nombre+localidad);
-                                    });
-                                    if(num==numero){
+                                        if(num==numero){
                                         $("#listadept").text("");   
                                          console.log("dentro de la funcion click");                                                     
                                          html2 = "<li>"+numero+"</li><li>"+nombre+"</li><li>"+localidad+"</li>";
                                        $("#listadept").append(html2);
                                        console.log("html2 dentro de funcion click"+html2)
                                     }
+                                   
+                                    });                                            
                                   });
                                     
                               });                           
