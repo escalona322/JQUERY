@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Jugadores JSON</h1>
+    <hr>
+    <select id="selectjugadores">
+
+    </select>
+    <hr>
+    <div id="contenedor">
+
+    </div>
+    <script>
+        $(document).ready(function(){
+            $.ajax({         
+                    "url":"documentos/JSON/jugadores.json",
+                    "method":"GET",
+                    success: function(data){
+                        var indice = 0;
+                       $.each(data.jugadores, function(key, value){   
+                           indice +=1;                          
+                            var option = $("<option>", {
+                                "text": value.nombre,
+                                "value": indice,
+                            })
+                            
+                            option.appendTo("#selectjugadores");
+                       });
+                    }
+            })
+            $("#selectjugadores").change(function(){
+                var seleccionado = $(this).val();
+                $.ajax({
+                    "url":"documentos/JSON/jugadores.json",
+                    "method":"GET",
+                    success: function(data){
+                        $("#contenedor").text("");
+                        var indice = 0;
+                        $.each(data.jugadores, function(key, value){
+                            indice += 1;
+                            var numero = value.numero;
+                            var nombre = value.nombre;
+                            var posicion = value.posicion;
+                            var edad = value.edad;
+                            var imagen = value.imagen;
+
+                            var h1 = $("<h1>", {
+                                "text": "Numero: "+numero+" Nombre: "+ nombre+ " Posicion: "+posicion+" Edad: "+edad,
+                            });
+                            var img = $("<img>", {
+                                "src": imagen,
+                            })
+                            console.log("dentro de success "+ h1);
+                            if(seleccionado==indice){
+                            $("#contenedor").append(h1);
+                            $("#contenedor").append(img);
+                            }
+                        })
+                    }
+                });
+            });
+      
+        });
+    </script>
+</body>
+</html>

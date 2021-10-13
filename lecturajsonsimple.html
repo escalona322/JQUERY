@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Lectura Json</h1>
+    <button type="button" id="botonget">Leer con getJson</button>
+    <button type="button" id="botonajax">Leer con Ajax</button>
+    <hr/>
+    <div id="contenedor">
+
+    </div>
+    <script>
+        $(document).ready(function(){
+            $("#botonget").click(function(){
+                $.getJSON("documentos/JSON/tareas.json", function(data){
+                    $.each(data, function(key, value){
+                        var h1 = $("<h1>", {
+                            "text": "Clave: " + key + ", Valor: "+value
+                        });
+                        h1.appendTo($("#contenedor"));
+                    })
+                });
+            });
+
+            $("#botonajax").click(function(){
+                $.ajax({
+                    "url":"documentos/JSON/tareas.json",
+                    "method": "GET",
+                    "Content-Type": "application/json",
+                    //SUCCESS Y ERROR FUNCIONAN TANTO CON COMILLAS COMO SIN COMILLAS
+                    success: function(data){
+                        $.each(data, function(key, value){
+                            var h1 = $("<h1>",{
+                                "style": "color:red",
+                                "text": "Clave: "+key+ ", Valor: "+value,
+                            });
+                            $("#contenedor").append(h1);
+                        })
+                    },  
+                    "error": function(error){
+                        console.log(error);
+                        $("#contenedor").text("Error del servicio, error: ")
+                    }
+                })
+            });
+        });
+    </script>
+</body>
+</html>

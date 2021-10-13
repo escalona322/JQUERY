@@ -78,13 +78,75 @@
   <div class="bg-light p-5 rounded">
     <h1>Navbar example</h1>
     <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p>
+    <img src="images/pepe.jpg" class="rounded-circle    "style="width: 100px; height: 100px;" alt="">
+    <select id="selectcoches">
+
+    </select>
     <a class="btn btn-lg btn-primary" href="/docs/5.1/components/navbar/" role="button">View navbar docs &raquo;</a>
+  </div>
+  <div id="displaycoches">
+    
   </div>
 </main>
 
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            var html = "";
+            $.get("documentos/XML/coches.xml", function(data){
+                var opcion = "";
+                var idcoche ="";
+                var marca ="";
+                var modelo = "";
+                var linkimg = "";
+                $(data).each(function(){
+                         $(this).find("coche").each(function(){
+                            idcoche = $(this).find("idcoche").text();
+                            marca = $(this).find("marca").text();
+                            modelo = $(this).find("modelo").text();
+                            linkimg = $(this).find("imagen").text();
 
+                            opcion = $("<option>", {
+                                "text" : modelo,
+                                "value" : idcoche,                                
+                            });
+
+                            $("#selectcoches").append(opcion);                  
+                        });                         
+                    });
+                });
+                $("#selectcoches").change(function(){
+                                var num = $(this).val();
+                                var idcoche2 ="";
+                                var marca2 ="";
+                                var modelo2 = "";
+                                var linkimg2 = "";
+                                console.log("dentro de change. ID: "+num)
+                                $.get("documentos/XML/coches.xml", function(data){                                  
+                                    $(data).each(function(){
+                                        $(this).find("coche").each(function(){
+                                            idcoche2 = $(this).find("idcoche").text();
+                                            marca2 = $(this).find("marca").text();
+                                            modelo2 = $(this).find("modelo").text();
+                                            linkimg2 = "'"+$(this).find("imagen").text()+"'";
+                                            if(num==idcoche2){
+                                             
+                                                //console.log("Link imagen: "+linkimg2);
+                                                console.log(linkimg2);
+                                                html = "<li> IdCoche: " + idcoche2 + "</li>" +
+                                                "<li> Marca: "+marca2+"</li>"+
+                                                "<li> Modelo: "+modelo2+"</li>"+                                              
+                                                "<li> Imagen: <img src=" + linkimg2 + "/></li>";
+                                                
+                                                 $("#displaycoches").html(html);
+                                            }                                                                              
+                                        });                                     
+                                    });
+                                });
+                            });      
+            });
+    </script>
       
   </body>
 </html>
