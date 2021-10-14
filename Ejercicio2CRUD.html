@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Ejemplo Tabla dinamica JQuery</h1>    
+    <hr>
+    <table id="tabladepartamentos" class="table">
+        <thead>
+            <tr>
+                <th>Numero</th><th>Nombre</th><th>Localidad</th><th>Acción</th>
+            </tr>
+        </thead>
+        <tbody><tr></tr></tbody>
+    </table>
+    <script>
+        var urlapi = "https://apicruddepartamentoscore.azurewebsites.net";
+        var urlapiemp = "https://apiempleadosspgs.azurewebsites.net/";
+        $(document).ready(function(){
+            cargarDepartamentos();
+        })
+        
+
+        function cargarDepartamentos(){
+            //GET
+            var request = "/api/departamentos"
+            var tr = "";
+            var td1 = "";
+            var td2 = "";
+            var td3 = "";
+            var td4 = "";
+            var boton = "";
+            $.ajax({
+                "url": urlapi + request,
+                "method": "GET",
+                success: function(data){
+              
+                    $.each(data, function(index, dept){
+                         boton = $("<button>", {
+                            "type":"button",
+                            "id": dept.numero,                           
+                            "text": "Empleados"
+                        });
+                         tr = $("<tr>");
+                         td1 = $("<td>", {
+                            "text":dept.numero
+                        });
+                         td2 = $("<td>", {
+                            "text":dept.nombre
+                        });
+                         td3 = $("<td>", {
+                            "text":dept.localidad
+                        });
+                         td4 = $("<td>", {   })
+                    td4.append(boton);                                        
+                    $(tr).append(td1);
+                    $(tr).append(td2);
+                    $(tr).append(td3);
+                    $(tr).append(td4);
+                    $("#tabladepartamentos tbody").append(tr);
+                    boton.click(function(){
+                        var request = "/api/empleados"
+                       console.log("dentro de ver empleados");
+                        $.ajax({
+                        "url": urlapiemp + request,
+                       "method": "GET",
+                        success: function(data){
+                        var thead="";
+                        var tbody=""
+                          $.each(data, function(index, empl){
+                            console.log("dentro del each empleado"+empl.apellido);   
+                            thead = "";
+                            thead = "<tr><th>Apellido</th><th>Oficio</th><th>Salario</th><th>Departamento</th></tr>";
+                             $("#tabladepartamentos thead").html(thead);
+                             if(empl.departamento == dept.numero){
+                                tbody += "<tr><td>"+empl.apellido+"</td><td>"+empl.oficio+"</td><td>"+empl.salario+"</td><td>"+dept.numero+"</td></tr>";
+                                 $("#tabladepartamentos tbody").html(tbody);
+                             }                           
+                       });                    
+                       }
+                  });
+                    });
+                    });            
+                }
+            });
+          
+        }
+    </script>
+</body>
+</html>
