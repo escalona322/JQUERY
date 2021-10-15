@@ -41,7 +41,8 @@
             <div class="col-3" >
                 <div class="row" id="contdetalles"></div>
                 <div class="row">
-                    <ul id="detallesempl">
+                    <h1>Detalles empleado</h1>
+                    <ul id="detallesempl" class="px-5">
                    
                     </ul>
                 </div>
@@ -56,6 +57,7 @@
     </div>   
 
     <script>
+        //CODIGO MEJORABLE CON LAS LLAMADAS MAS CONCRETAS A LA API DE EMPLEADOS
         var urlapiemp = "https://apiempleadosspgs.azurewebsites.net/";
         $(document).ready(function(){
             $("#buscarempl").click(function(){
@@ -70,12 +72,15 @@
                    "url": urlapiemp+request,
                    "method": "GET",
                    success: function(data){
+                    $("#tablaempleados tbody").text("");
                        $.each(data, function(index, empl){
                            if(salar<=empl.salario){
+                            
                             tr=$("<tr>");
                             linkempl = $("<a>", {
                                 "text": empl.apellido,
-                                "id": empl.idempleado
+                                "id": empl.idempleado,
+                                "href": "#"
                             })
                             tdap=$("<td>", {
                                 //Vacio pq la relleno con append
@@ -94,19 +99,17 @@
 
                             linkempl.click(function(){
                                 $("#detallesempl").text("");
-                                var h1 = $("<h1>", {
-                                    "text": "Detalles Empleado"
-                                });
+                               
                                 var li1 = $("<li>", {
-                                    "text": empl.apellido
+                                    "text": "Apellido: "+empl.apellido
                                 });
                                 var li2 = $("<li>", {
-                                    "text": empl.idEmpleado
+                                    "text": "IdEmpleado: "+empl.idEmpleado
                                 });
                                 var li3 = $("<li>", {
-                                    "text": empl.departamento
+                                    "text": "Departamento: "+empl.departamento
                                 });
-                                $("#contdetalles").append(h1);
+                               
                                 $("#detallesempl").append(li1);
                                 $("#detallesempl").append(li2);
                                 $("#detallesempl").append(li3);

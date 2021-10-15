@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>CRUD Empleados</h1>
+    <select name="" id="selectoficios">
+
+    </select>
+    <input type="number" id="cajaincremento">
+    <br><br>
+    <button id="mostrarempl" type="button">Cargar empleados</button>
+    <button id="incrsalario">Incrementar Salario</button>
+    <br><br>
+    <table id="tablaempleados" border="1">
+        <thead>
+            <tr><th>idEmpleado</th><th>Apellido</th><th>Oficio</th><th>Salario</th><th>Director</th></tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script>
+        var urlapi = "https://apiempleadosaction.azurewebsites.net";
+        $(document).ready(function(){
+            cargarOptions();
+
+            $("#mostrarempl").click(function(){
+                cargarEmpleadosPorOficio();
+            });
+
+            $("#incrsalario").click(function(){
+                var ofi = $("#selectoficios option:selected").val();
+                var incrsal = $("#cajaincremento").val();
+
+                var request = "/api/Empleados/IncrementarSalarioOficios/"+ofi+"/"+incrsal;
+
+                $.ajax({
+                    "url": urlapi+request,
+                    "method": "PUT",
+                    success: function(){
+                        console.log("Salario incrementado, vivan los sindicatos")
+                        cargarEmpleadosPorOficio();
+                    }
+                })
+            })
+        });
+
+        function cargarEmpleadosPorOficio(){
+            console.log("dentro de mostrar empls")
+                var ofi = $("#selectoficios option:selected").val();
+                             
+                console.log(ofi);
+                var request = "/api/Empleados/GetEmpleadosOficio/empleadosoficio/"+ ofi;
+            $.ajax({
+                "url": urlapi + request,
+                "method": "GET",
+                success: function(data){
+                    console.log(data)
+                    var html=""
+                    $.each(data, function(index, empl){
+                        html += "<tr>";
+                        html += "<td>"+empl.idEmpleado+"</td><td>"+empl.apellido+"</td><td>"+empl.oficio+"</td><td>"+empl.salario+"</td><td>"+empl.director+"</td>";
+                        html += "</tr>";
+                    });
+                    $("#tablaempleados tbody").html(html);
+                }
+            });
+        }
+        function cargarOptions(){
+            var request = "/api/Empleados/GetOficios/oficios";
+            $.ajax({
+                "url": urlapi+request,
+                "method": "GET",
+                success: function(data){
+                    console.log(data);
+                    $.each(data, function(index, ofic){                       
+                        var option = $("<option>", {
+                            "text": ofic,
+                            "value": ofic,    
+                        })
+                        $("#selectoficios").append(option);
+                    })                    
+                }
+           })
+        }
+       
+        
+    </script>
+</body>
+</html>
