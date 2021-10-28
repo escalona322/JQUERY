@@ -14,8 +14,8 @@
         });
     </script>
     <div id="nav"></div>
-    <div class="container" id="tablajugadores">
-        <table className="table">
+    <div class="container">
+        <table className="table" id="tablajugadores">
             <thead>
                 <th>Nombre</th>
                 <th>Imagen</th>
@@ -28,28 +28,42 @@
                         cargarJugadores();
                     })
                     function cargarJugadores(){
-                        var request = "/api/Apuestas";
+                        const urlSearchParams = new URLSearchParams(window.location.search);
+                         const params = Object.fromEntries(urlSearchParams.entries());
+                        //Recupero el id de equipo de la url para hacer la peticion
+                         var idEquipo =  params.idEquipo;
+
+                        var request = "/api/Jugadores/JugadoresEquipo/"+idEquipo;
                      
                         $.ajax({
                             "url": urlapi+request,
                             "method": "GET",
                             success: function(data){
-                                $.each(data, function(index, apu){
+                                console.log(data);
+                                $.each(data, function(index, jug){
                                     
                                     var tr = $("<tr>", {});
-                                    var tdusu = $("<td>", {
-                                        "text": apu.usuario
+                                    var tdnom = $("<td>", {
+                                        "text": jug.nombre
                                     })
-                                    var tdres = $("<td>", {
-                                        "text": apu.resultado
+                                    var tdimg = $("<td>", {
                                     })
-                                    var tdfec = $("<td>", {
-                                        "text": apu.fecha
+                                    var tddet = $("<td>", {
                                     })
-                                   tr.append(tdusu);
-                                   tr.append(tdres);
-                                   tr.append(tdfec);                                          
-                                   $("#tablaapuestas tbody").append(tr)
+                                    var img = $("<img>", {
+                                        "src": jug.imagen
+                                    })
+                                    var linkdetalles = $("<a>", {
+                                        "href": "DetallesJugador.html?idJugador="+jug.idJugador,
+                                        "class": "btn btn-warning",
+                                        "text": "Detalles"
+                                    })
+                                   tr.append(tdnom);
+                                   tdimg.append(img);
+                                   tddet.append(linkdetalles);
+                                   tr.append(tdimg);
+                                   tr.append(tddet);                                          
+                                   $("#tablajugadores tbody").append(tr)
                                 })
                                 
                             }
